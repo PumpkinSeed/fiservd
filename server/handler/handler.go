@@ -18,7 +18,7 @@ func Handle(data string) string {
 		log.Println(err.Error())
 	}
 
-	time.Sleep(200*time.Millisecond)
+	time.Sleep(1200*time.Millisecond)
 	log.Printf("Primary account number is: %s\n", m.DE2.Value)
 	// Check for fun
 	if string(m.DE2.Value) == "4846811212" {

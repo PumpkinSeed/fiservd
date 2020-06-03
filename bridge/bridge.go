@@ -42,8 +42,7 @@ func (s server) Serve() error {
 	s.router = chi.NewRouter()
 	s.setMiddlewares()
 
-
-	s.router.Get("/", s.handler)
+	s.router.Post("/", s.handler)
 	return http.ListenAndServe(Port, s.router)
 }
 
