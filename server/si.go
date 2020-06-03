@@ -3,8 +3,8 @@ package server
 import (
 	"bufio"
 	"fmt"
+	"github.com/PumpkinSeed/fiservd/server/handler"
 	"net"
-	"time"
 )
 
 // si - Single but interrupt previous connection
@@ -81,11 +81,8 @@ func handleConn(c conn) {
 				fmt.Println(err)
 			}
 
-			fmt.Println(string(netData))
-
-			t := time.Now()
-			myTime := t.Format(time.RFC3339) + "\n"
-			c.c.Write([]byte(myTime))
+			response := handler.Handle(string(netData))
+			c.c.Write([]byte(response))
 		}
 	}
 }

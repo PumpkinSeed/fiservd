@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"bitbucket.org/fluidpay/fiservd/client"
-	"bitbucket.org/fluidpay/fiservd/server"
+	"github.com/PumpkinSeed/fiservd/client"
+	"github.com/PumpkinSeed/fiservd/server"
 )
 
 func main() {

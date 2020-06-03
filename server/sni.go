@@ -2,9 +2,8 @@ package server
 
 import (
 	"bufio"
-	"fmt"
+	"github.com/PumpkinSeed/fiservd/server/handler"
 	"net"
-	"time"
 )
 
 // sni - Single non interrupt connection
@@ -37,11 +36,8 @@ func (SNI) Listen() error {
 			return err
 		}
 
-		fmt.Println(string(netData))
-
-		t := time.Now()
-		myTime := t.Format(time.RFC3339) + "\n"
-		c.Write([]byte(myTime))
+		response := handler.Handle(string(netData))
+		c.Write([]byte(response))
 	}
 
 	return nil
