@@ -8,6 +8,7 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"sync"
 	"time"
 
 	"github.com/go-chi/chi"
@@ -23,6 +24,7 @@ type Wrapper struct {
 }
 
 type server struct {
+	mutex *sync.Mutex
 	conn   net.Conn
 	router *chi.Mux
 }
@@ -34,6 +36,7 @@ func NewServer(host, port string) (server, error) {
 	}
 
 	return server{
+		mutex: &sync.Mutex{},
 		conn: c,
 	}, nil
 }
@@ -51,10 +54,12 @@ func (s server) setMiddlewares() {
 	// Stop processing after 30 seconds.
 	s.router.Use(middleware.Timeout(30 * time.Second))
 	// Only one request will be processed at a time.
-	s.router.Use(middleware.Throttle(1))
+	//s.router.Use(middleware.Throttle(1))
 }
 
 func (s server) handler(w http.ResponseWriter, r *http.Request) {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
 	log.Print("---- Incoming request, start to handle it")
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {

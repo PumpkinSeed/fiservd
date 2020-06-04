@@ -44,5 +44,5 @@ func main() {
 		fmt.Println(err.Error())
 	}
 
-	time.Sleep(10*time.Second)
+	time.Sleep(20*time.Second)
 }
